@@ -1,5 +1,4 @@
 const express = require('express')
-// const { response } = require('express')
 const app = express() 
 const morgan = require('morgan')
 
@@ -22,34 +21,33 @@ morgan.token('data', (req, res) => JSON.stringify(req.body)
 
 let items = [
     {
-        "name": "Arto Hellas",
-        "number": "4747",
-        "id": 1
+        "id": 1,
+        "text": "T-Rex",
+        "amount": 2,
+        "price": 1250,
+        "isCompleted": false
       },
       {
-        "name": "Ada Lovelace",
-        "number": "39-44-5323523",
-        "id": 2
+        "id": 2,
+        "text": "Eggs",
+        "amount": 5,
+        "price": 1,
+        "isCompleted": false
       },
       {
-        "name": "Dan Abramov",
-        "numbeid": "12-43-234345",
-        "id": 3
-      },
-      {
-        "name": "Mary Poppendieck",
-        "numbeid": "39-23-6423122",
-        "id": 4
+        "id": 3,
+        "text": "Bananas",
+        "amount": 24,
+        "price": 2,
+        "isCompleted": false
       }
+
 ]
 
 // app.get('/', (req, res) => {
 //     res.send('<h1>test<h1>')
 // })
 
-app.get('/info', (req, res) => {
-    res.send(`Phonebook has info for ${items.length} people<br><br>${Date()}`)
-})
 
 app.get('/api/items', (req, res) => {
     res.json(items)
@@ -67,38 +65,31 @@ app.get('/api/items/:id', (req, res) => {
 
 })
 
+const generateId = () => {
+    const maxId = items.length > 0
+      ? Math.max(...items.map(n => n.id))
+      : 0
+    return maxId + 1
+  }
+
 app.post('/api/items', (req, res) => {
-    // const maxId = items.length > 0
-    // ? Math.max(...items.map(n => n.id))
-    // : 0
-    // const item = req.body
-    // item.id = maxId + 1
 
-    const item = req.body
-    // console.log('!!!!!')
-    // console.log(item)
 
-    if (!item.name) {
-        return res.status(400).json({
-            error: 'name missing.'
-        })
+    const body = request.body
+
+    if (!body.content) {
+      return response.status(400).json({ 
+        error: 'content missing' 
+      })
     }
 
-    let nameDubl = items.find(item => item.name === req.body.name)
-    if (nameDubl) {
-        return res.status(400).json({
-            error: 'name must be unique'
-        })
-    }
-
-    if (!item.number) {
-        return res.status(400).json({
-            error: 'number missing.'
-        })
-    }
-
-
-    item.id = Math.round(Math.random() * 999999)
+    const item = {
+        id: generateId(),
+        text: body.text,
+        amount: body.amount,
+        isCompleted: body.isCompleted || false,
+        date: new Date(),
+      }
 
     items = items.concat(item)
 
@@ -113,8 +104,10 @@ app.delete('/api/items/:id', (req, res) => {
     res.status(204).end()
   })
 
-const PORT = 3001
-app.listen(PORT, () => {
+  const PORT = process.env.PORT || 3001
+  app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
+
+// built upon: https://fullstackopen.com/en/part3/
 

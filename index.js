@@ -15,6 +15,8 @@ const requestLogger = (request, response, next) => {
   next();
 };
 
+
+
 app.use(requestLogger);
 
 // let lists = [
@@ -109,11 +111,14 @@ app.delete("/api/lists/:id", (request, response, next) => {
 app.put("/api/lists/:id", (request, response, next) => {
     const body = request.body;
   
-    // const list = {
-    //   name: body.name,
-    //   number: body.number,
-    // };
+    const list = {
+        newItems: [{
+            text: body.newItems[0].text
+        }],
+      };
   
+      console.log(list)
+
     List.findByIdAndUpdate(request.params.id, list, { new: true })
       .then((updatedList) => {
         response.json(updatedList);

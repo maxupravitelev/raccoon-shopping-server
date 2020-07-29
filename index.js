@@ -1,10 +1,9 @@
-require('dotenv').config()
-
+require("dotenv").config();
 
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const List = require('./models/list');
+const List = require("./models/list");
 
 app.use(express.json());
 
@@ -75,44 +74,74 @@ app.use(requestLogger);
 
 // ];
 
-
-
 app.get("/api/lists", (req, res) => {
-    List.find({}).then(list => {
-        res.json(list);
-    })
+  List.find({}).then((list) => {
+    res.json(list);
+  });
 });
 
 app.get("/api/lists/:id", (req, res) => {
-
-    List.findById(req.params.id).then(list => {
-        res.json(list)
-    })
+  List.findById(req.params.id).then((list) => {
+    res.json(list);
+  });
 });
 
 app.post("/api/lists", (req, res) => {
+  const body = req.body;
 
-    const body = req.body;
+  const list = new List({
+    newItems: body.newItems,
+  });
 
-    const list = new List({
-        newItems: body.newItems
-    })
-
-    list.save().then(savedList => {
-        res.json(savedList)
-    })
-
-
+  list.save().then((savedList) => {
+    res.json(savedList);
+  });
 });
 
-app.delete("/api/lists/:id", (req, res) => {
-  const id = Number(req.params.id);
-  lists = lists.filter((list) => list.id !== id);
-
-  res.status(204).end();
+app.delete("/api/lists/:id", (request, response, next) => {
+    List.findByIdAndRemove(request.params.id)
+    .then((result) => {
+        response.status(204).end();
+    })
+    .catch((error) => next(error));
 });
 
-const PORT = process.env.PORT || 3001;
+app.put("/api/lists/:id", (request, response, next) => {
+    const body = request.body;
+  
+    // const list = {
+    //   name: body.name,
+    //   number: body.number,
+    // };
+  
+    List.findByIdAndUpdate(request.params.id, list, { new: true })
+      .then((updatedList) => {
+        response.json(updatedList);
+      })
+      .catch((error) => next(error));
+  });
+
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: "unknown endpoint" });
+  };
+  
+  // handler of requests with unknown endpoint
+  app.use(unknownEndpoint);
+  
+  const errorHandler = (error, request, response, next) => {
+    console.error(error.message);
+  
+    if (error.name === "CastError") {
+      return response.status(400).send({ error: "malformatted id" });
+    }
+  
+    next(error);
+  };
+  
+  app.use(errorHandler);
+
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

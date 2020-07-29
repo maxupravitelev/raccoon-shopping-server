@@ -111,19 +111,22 @@ app.delete("/api/lists/:id", (request, response, next) => {
 app.put("/api/lists/:id", (request, response, next) => {
     const body = request.body;
   
+    console.log("request", request)
+    console.log("response", response)
+
+
     const list = {
         newItems: [{
             text: body.newItems[0].text
         }],
       };
   
-      console.log(list)
 
-    List.findByIdAndUpdate(request.params.id, list, { new: true })
-      .then((updatedList) => {
-        response.json(updatedList);
-      })
-      .catch((error) => next(error));
+    // List.findByIdAndUpdate(request.params.id, list, { new: true })
+    //   .then((updatedList) => {
+    //     response.json(updatedList);
+    //   })
+    //   .catch((error) => next(error));
   });
 
 

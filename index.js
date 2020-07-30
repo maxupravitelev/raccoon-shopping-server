@@ -19,76 +19,21 @@ const requestLogger = (request, response, next) => {
 
 app.use(requestLogger);
 
-// let lists = [
 
-//     {
-//       id: 1,
-//       listId: 1,
-//       newItems: [
-//         {
-//           id: 1,
-//           text: "T-Rex",
-//           amount: 2,
-//           price: 1250,
-//           isCompleted: false,
-//         },
-//         {
-//           id: 2,
-//           text: "Eggs",
-//           amount: 5,
-//           price: 1,
-//           isCompleted: false,
-//         },
-//         {
-//           id: 3,
-//           text: "Bananas",
-//           amount: 24,
-//           price: 2,
-//           isCompleted: false,
-//         },
-//       ],
-//     },
-//     {
-//         newItems: [
-//         {
-//           text: "Cookies",
-//           amount: "4",
-//           isCompleted: false,
-//         },
-//         {
-//           text: "Cookies",
-//           amount: "4",
-//           isCompleted: true,
-//         },
-//       ],
-//       id: 2,
-//     },
-//     {
-//         newItems: [
-//         {
-//           text: "Cookies",
-//           amount: "2",
-//           isCompleted: false,
-//         },
-//       ],
-//       id: 3,
-//     },
 
-// ];
-
-app.get("/api/lists", (req, res) => {
+app.get("/api/lists", (req, res, next) => {
   List.find({}).then((list) => {
     res.json(list);
-  });
+  }).catch((error) => next(error));
 });
 
-app.get("/api/lists/:id", (req, res) => {
+app.get("/api/lists/:id", (req, res, next) => {
   List.findById(req.params.id).then((list) => {
     res.json(list);
-  });
+  }).catch((error) => next(error));
 });
 
-app.post("/api/lists", (req, res) => {
+app.post("/api/lists", (req, res, next) => {
   const body = req.body;
 
   const list = new List({
@@ -97,7 +42,8 @@ app.post("/api/lists", (req, res) => {
 
   list.save().then((savedList) => {
     res.json(savedList);
-  });
+  })
+  .catch((error) => next(error));
 });
 
 app.delete("/api/lists/:id", (request, response, next) => {
@@ -111,16 +57,18 @@ app.delete("/api/lists/:id", (request, response, next) => {
 app.put("/api/lists/:id", (request, response, next) => {
     const body = request.body;
   
-    console.log("request", request)
-    console.log("response", response)
-
-
     const list = {
         newItems: [{
             text: body.newItems[0].text
         }],
       };
   
+    List.findByIdAndUpdate(request.params.id, list, { new: false })
+      .then(([updatedList,]) => {
+        response.json(updatedList);
+      })
+      .catch((error) => next(error));
+
 
     // List.findByIdAndUpdate(request.params.id, list, { new: true })
     //   .then((updatedList) => {

@@ -5,6 +5,7 @@ const app = express();
 const cors = require("cors");
 const List = require("./models/list");
 
+app.use(cors());
 app.use(express.json());
 
 const requestLogger = (request, response, next) => {

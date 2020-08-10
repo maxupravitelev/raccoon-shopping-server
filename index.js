@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const List = require("./models/list");
+const request = require('request')
 
 app.use(cors());
 app.use(express.json());
@@ -17,6 +18,7 @@ const requestLogger = (request, response, next) => {
 };
 
 app.use(requestLogger);
+
 
 app.get("/api/lists", (req, res, next) => {
   List.find({})

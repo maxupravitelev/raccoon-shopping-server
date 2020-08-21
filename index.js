@@ -33,16 +33,12 @@ app.use(requestLogger);
 //     .catch((error) => next(error));
 // });
 
-// app.get("/api/lists/:id", (req, res, next) => {
-//   List.findById(req.params.id)
-//     .then((list) => {
-//       res.json(list);
-//     })
-//     .catch((error) => next(error));
-// });
+
+
+/* find all Item in List via listId */
 
 app.get("/api/lists/:id", (req, res, next) => {
-  List.find({ listId: req.params.id })
+  Item.find({ listId: req.params.id })
     .then((list) => {
       res.json(list);
     })
@@ -72,7 +68,7 @@ app.post('/api/new-list', (req, res) => {
   })
 
 
-  app.post('/api/new-item', function(req, res, next){
+  app.post('/api/new-item',  (req, res, next) => {
     
     let listId = req.body.listId 
     let text = req.body.text 
@@ -128,18 +124,26 @@ app.post('/api/new-list', (req, res) => {
 //     .catch((error) => next(error));
 // });
 
-// app.delete("/api/lists/:id", (request, response, next) => {
-//   List.findByIdAndRemove(request.params.id)
-//     .then((result) => {
-//       response.status(204).end();
-//     })
-//     .catch((error) => next(error));
-// });
 
-// app.put("/api/lists/:id", (request, response, next) => {
+///* app.delete routes */
+
+/* delete item */
+
+app.delete("/api/items/:id", (request, response, next) => {
+  Item.findByIdAndRemove(request.params.id)
+    .then((result) => {
+      response.status(204).end();
+    })
+    .catch((error) => next(error));
+});
+
+
+///* app.put routes*/ 
+
+// app.put("/api/items/:id", (request, response, next) => {
 //   const body = request.body;
 
-//   const lItemist = {
+//   const item = {
 //     news: [
 //       {
 //         text: body.newItems[0].text,
@@ -147,7 +151,7 @@ app.post('/api/new-list', (req, res) => {
 //     ],
 //   };
 
-//   List.findByIdAndUpdate(request.params.id, list, { new: false })
+//   List.findByIdAndUpdate(request.params.id, item, { new: false })
 //     .then(([updatedList]) => {
 //       response.json(updatedList);
 //     })

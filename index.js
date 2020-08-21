@@ -44,7 +44,7 @@ app.get("/api/lists/:id", (req, res, next) => {
 
 /***** app.post routes */
 
-app.post('/api/exercise/new-user', (req, res) => {
+app.post('/api/new-user', (req, res) => {
     
     let userCount = 0;
     
@@ -53,7 +53,7 @@ app.post('/api/exercise/new-user', (req, res) => {
     }).then(() => {
     
     let user = new User ({
-      userCount: userCount++
+      userId: userCount++
     })
     
     user.save().then((savedUser) => {
@@ -63,6 +63,47 @@ app.post('/api/exercise/new-user', (req, res) => {
     }).catch((error) => console.log(error))
     
   })
+
+
+  app.post('/api/new-item', function(req, res, next){
+    
+    let userId = req.body.userId 
+    let text = req.body.text 
+    let amount = req.body.amount 
+    let date = req.body.date || Date.now();
+    let isCompleted = req.body.isCompleted || 0;
+    
+   
+    let update = {
+      'userId': userId,
+      'text': text,
+      'amount': amount,
+      'date': date,
+      'isCompleted': isCompleted
+    }
+    
+console.log(update)
+
+    User.findById(req.body.userId, (err, user) => {
+      
+        const log = new List (update);
+   
+        log.save( (err, newLog) => {
+          
+          if (err) return next(err);
+          res.json({
+                userId:log.userId, 
+                text: log.text, 
+                amount: log.amount,
+                date: log.date.toDateString(),
+                isCompleted: isCompleted
+            }); 
+        });
+        
+      });
+    
+  });  
+
 
 
 app.post("/api/lists", (req, res, next) => {

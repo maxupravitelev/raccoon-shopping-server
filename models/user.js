@@ -17,7 +17,7 @@ mongoose
 
 const userSchema = new mongoose.Schema({
     username: { type: String},
-    userCount: { type: Number }
+    userId: { type: Number }
     })
 
 

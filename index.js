@@ -23,8 +23,10 @@ const requestLogger = (request, response, next) => {
 
 app.use(requestLogger);
 
-/***** app.get routes */
+///***** app.get routes */
 
+
+// find all lists
 // app.get("/api/lists", (req, res, next) => {
 //   List.find({})
 //     .then((list) => {

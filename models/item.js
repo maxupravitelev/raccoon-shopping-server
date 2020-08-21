@@ -25,7 +25,7 @@ mongoose
 
 const itemSchema = new mongoose.Schema({
   
-    userId: {type: String, ref:'User', required: false},
+    listId: {type: String, ref:'User', required: false},
     text: {type: String, maxlength: [20, 'description too long'], required: false},
     amount: {type: Number, min: 1, required: false},
     date: {type: Date, default: Date.now},

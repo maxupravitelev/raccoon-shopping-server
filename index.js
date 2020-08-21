@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require('body-parser')
-const User = require('./models/user')
+const List = require('./models/list')
 const Item = require("./models/item");
 // const request = require('request')
 
@@ -41,22 +41,29 @@ app.use(requestLogger);
 //     .catch((error) => next(error));
 // });
 
+app.get("/api/lists/:id", (req, res, next) => {
+  List.find({ listId: req.params.id })
+    .then((list) => {
+      res.json(list);
+    })
+    .catch((error) => next(error));
+});
 
 /***** app.post routes */
 
-app.post('/api/new-user', (req, res) => {
+app.post('/api/new-list', (req, res) => {
     
-    let userCount = 0;
+    let listCount = 0;
     
-      User.countDocuments({}, (error, count) => {
-      userCount = count
+      List.countDocuments({}, (error, count) => {
+      listCount = count
     }).then(() => {
     
-    let user = new User ({
-      userId: userCount++
+    let list = new List ({
+      listId: listCount++
     })
     
-    user.save().then((savedUser) => {
+    list.save().then((savedUser) => {
       res.json(savedUser)
     }).catch((error) => console.log(error))     
       
@@ -67,7 +74,7 @@ app.post('/api/new-user', (req, res) => {
 
   app.post('/api/new-item', function(req, res, next){
     
-    let userId = req.body.userId 
+    let listId = req.body.listId 
     let text = req.body.text 
     let amount = req.body.amount 
     let date = req.body.date || Date.now();
@@ -75,27 +82,27 @@ app.post('/api/new-user', (req, res) => {
     
    
     let update = {
-      'userId': userId,
+      'listId': listId,
       'text': text,
       'amount': amount,
       'date': date,
       'isCompleted': isCompleted
     }
     
-console.log(update)
+    console.log(update)
 
-    User.findById(req.body.userId, (err, user) => {
+    List.findById(req.body.listId, (err, list) => {
       
-        const log = new Item (update);
+        const item = new Item (update);
    
-        log.save( (err, newLog) => {
+        item.save( (err, newLog) => {
           
           if (err) return next(err);
           res.json({
-                userId:log.userId, 
-                text: log.text, 
-                amount: log.amount,
-                date: log.date.toDateString(),
+                listId: item.listId, 
+                text: item.text, 
+                amount: item.amount,
+                date: item.date.toDateString(),
                 isCompleted: isCompleted
             }); 
         });

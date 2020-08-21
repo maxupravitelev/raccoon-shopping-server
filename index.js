@@ -3,11 +3,15 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const bodyParser = require('body-parser')
+const User = require('./models/user')
 const List = require("./models/list");
-const request = require('request')
+// const request = require('request')
 
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
 
 const requestLogger = (request, response, next) => {
   console.log("Method:", request.method);
@@ -19,6 +23,7 @@ const requestLogger = (request, response, next) => {
 
 app.use(requestLogger);
 
+/***** app.get routes */
 
 app.get("/api/lists", (req, res, next) => {
   List.find({})
@@ -35,6 +40,30 @@ app.get("/api/lists/:id", (req, res, next) => {
     })
     .catch((error) => next(error));
 });
+
+
+/***** app.post routes */
+
+app.post('/api/exercise/new-user', (req, res) => {
+    
+    let userCount = 0;
+    
+      User.countDocuments({}, (error, count) => {
+      userCount = count
+    }).then(() => {
+    
+    let user = new User ({
+      userCount: userCount++
+    })
+    
+    user.save().then((savedUser) => {
+      res.json(savedUser)
+    }).catch((error) => console.log(error))     
+      
+    }).catch((error) => console.log(error))
+    
+  })
+
 
 app.post("/api/lists", (req, res, next) => {
   const body = req.body;

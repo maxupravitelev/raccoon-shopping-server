@@ -5,7 +5,7 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require('body-parser')
 const User = require('./models/user')
-const List = require("./models/list");
+const Item = require("./models/item");
 // const request = require('request')
 
 app.use(cors());
@@ -25,21 +25,21 @@ app.use(requestLogger);
 
 /***** app.get routes */
 
-app.get("/api/lists", (req, res, next) => {
-  List.find({})
-    .then((list) => {
-      res.json(list);
-    })
-    .catch((error) => next(error));
-});
+// app.get("/api/lists", (req, res, next) => {
+//   List.find({})
+//     .then((list) => {
+//       res.json(list);
+//     })
+//     .catch((error) => next(error));
+// });
 
-app.get("/api/lists/:id", (req, res, next) => {
-  List.findById(req.params.id)
-    .then((list) => {
-      res.json(list);
-    })
-    .catch((error) => next(error));
-});
+// app.get("/api/lists/:id", (req, res, next) => {
+//   List.findById(req.params.id)
+//     .then((list) => {
+//       res.json(list);
+//     })
+//     .catch((error) => next(error));
+// });
 
 
 /***** app.post routes */
@@ -86,7 +86,7 @@ console.log(update)
 
     User.findById(req.body.userId, (err, user) => {
       
-        const log = new List (update);
+        const log = new Item (update);
    
         log.save( (err, newLog) => {
           
@@ -106,46 +106,46 @@ console.log(update)
 
 
 
-app.post("/api/lists", (req, res, next) => {
-  const body = req.body;
+// app.post("/api/lists", (req, res, next) => {
+//   const body = req.body;
 
-  const list = new List({
-    newItems: body.newItems,
-  });
+//   const item = new Item({
+//     newItems: body.newItems,
+//   });
 
-  list
-    .save()
-    .then((savedList) => {
-      res.json(savedList);
-    })
-    .catch((error) => next(error));
-});
+//   list
+//     .save()
+//     .then((savedList) => {
+//       res.json(savedList);
+//     })
+//     .catch((error) => next(error));
+// });
 
-app.delete("/api/lists/:id", (request, response, next) => {
-  List.findByIdAndRemove(request.params.id)
-    .then((result) => {
-      response.status(204).end();
-    })
-    .catch((error) => next(error));
-});
+// app.delete("/api/lists/:id", (request, response, next) => {
+//   List.findByIdAndRemove(request.params.id)
+//     .then((result) => {
+//       response.status(204).end();
+//     })
+//     .catch((error) => next(error));
+// });
 
-app.put("/api/lists/:id", (request, response, next) => {
-  const body = request.body;
+// app.put("/api/lists/:id", (request, response, next) => {
+//   const body = request.body;
 
-  const list = {
-    newItems: [
-      {
-        text: body.newItems[0].text,
-      },
-    ],
-  };
+//   const lItemist = {
+//     news: [
+//       {
+//         text: body.newItems[0].text,
+//       },
+//     ],
+//   };
 
-  List.findByIdAndUpdate(request.params.id, list, { new: false })
-    .then(([updatedList]) => {
-      response.json(updatedList);
-    })
-    .catch((error) => next(error));
-});
+//   List.findByIdAndUpdate(request.params.id, list, { new: false })
+//     .then(([updatedList]) => {
+//       response.json(updatedList);
+//     })
+//     .catch((error) => next(error));
+// });
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: "unknown endpoint" });

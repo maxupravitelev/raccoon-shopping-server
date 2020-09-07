@@ -87,7 +87,7 @@ app.post('/api/new-list', (req, res) => {
       'isCompleted': isCompleted
     }
     
-    console.log(update)
+    // console.log(update)
 
     List.findById(req.body.listId, (err, list) => {
       
@@ -96,12 +96,14 @@ app.post('/api/new-list', (req, res) => {
         item.save( (err, newLog) => {
           
           if (err) return next(err);
+          console.log(item)
           res.json({
                 listId: item.listId, 
                 text: item.text, 
                 amount: item.amount,
                 date: item.date.toDateString(),
-                isCompleted: isCompleted
+                isCompleted: isCompleted,
+                itemId: item["_id"]
             }); 
         });
         

@@ -1,0 +1,21 @@
+PUT http://localhost:3001/api/lists/5f214b299c7c213e069f2a52
+Content-Type: application/json
+
+{
+    "newItems": [{
+           "text": "T-Rex2"
+
+         }
+    ]
+}
+
+
+# {
+#     "newItems": [{
+#            "text": "T-Rex2",
+#            "amount": 2,
+#            "price": 1250,
+#            "isCompleted": 0
+#          }
+#     ]
+# }

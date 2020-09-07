@@ -77,14 +77,15 @@ app.post('/api/new-list', (req, res) => {
     let amount = req.body.amount 
     let date = req.body.date || Date.now();
     let isCompleted = req.body.isCompleted || 0;
-    
+    let itemId = req.body.itemId;
    
     let update = {
       'listId': listId,
       'text': text,
       'amount': amount,
       'date': date,
-      'isCompleted': isCompleted
+      'isCompleted': isCompleted,
+      'itemId': itemId
     }
     
     // console.log(update)

@@ -5,7 +5,8 @@ Content-Type: application/json
     "listId": 0,
     "text": "C-Rex",
     "amount": 5,
-    "isCompleted": 1
+    "isCompleted": 1,
+    "itemId": "sf"
 }
 
 

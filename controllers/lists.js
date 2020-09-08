@@ -36,14 +36,15 @@ listRouter.post("/new-list", (req, res) => {
       
         List.countDocuments({}, (error, count) => {
         listCount = count
+        console.log(listCount)
       }).then(() => {
       
       let list = new List ({
         listId: listCount++
       })
-      
-      list.save().then((savedUser) => {
-        res.json(savedUser)
+      console.log(list)
+      list.save().then((newList) => {
+        res.json(newList)
       }).catch((error) => console.log(error))     
         
       }).catch((error) => console.log(error))

@@ -24,7 +24,7 @@ app.use(express.json())
 app.use(middleware.requestLogger)
 
 app.use('/api/lists', listRouter)
-app.use('/api/item', itemRouter)
+app.use('/api/items', itemRouter)
 
 
 app.use(middleware.unknownEndpoint)

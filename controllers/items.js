@@ -1,7 +1,9 @@
 const itemRouter = require("express").Router();
 const Item = require("../models/item")
+const List = require("../models/list")
 
-itemRouter.post('/api/new-item',  (req, res, next) => {
+
+itemRouter.post('/new-item',  (req, res, next) => {
     
     let listId = req.body.listId 
     let text = req.body.text 

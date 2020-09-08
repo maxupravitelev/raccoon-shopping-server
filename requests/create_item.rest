@@ -1,8 +1,8 @@
-POST http://localhost:3001/api/new-item
+POST http://localhost:3001/api/items/new-item
 Content-Type: application/json
 
 {
-    "listId": 0,
+    "listId": 26,
     "text": "C-Rex",
     "amount": 5,
     "isCompleted": 1,

@@ -1,6 +1,2 @@
-POST http://localhost:3001/api/new-list
+POST http://localhost:3001/api/lists/new-list
 Content-Type: application/json
-
-{
-    
-}

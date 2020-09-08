@@ -3,10 +3,11 @@ const List = require("../models/list")
 const Item = require("../models/item")
 
 
-///***** listRouter.get routes */
+///***** .get routes */
 
+/* .get all lists */
 
-// find all lists
+// not ready
 // listRouter.get("/api/lists", (req, res, next) => {
 //   List.find({})
 //     .then((list) => {
@@ -16,8 +17,7 @@ const Item = require("../models/item")
 // });
 
 
-
-/* find all Item in List via listId */
+/* .get all Items in List via listId */
 
 listRouter.get("/:id", (req, res, next) => {
     Item.find({ listId: req.params.id })
@@ -27,9 +27,10 @@ listRouter.get("/:id", (req, res, next) => {
       .catch((error) => next(error));
   });
   
-  /***** listRouter.post routes */
-  
-  listRouter.post('/api/new-list', (req, res) => {
+///***** .post routes */
+
+/* .post new list; create new list*/
+listRouter.post("/new-list", (req, res) => {
       
       let listCount = 0;
       
@@ -49,6 +50,8 @@ listRouter.get("/:id", (req, res, next) => {
       
     })
 
+
+/* .post */
 
 // listRouter.post("/api/lists", (req, res, next) => {
 //   const body = req.body;

@@ -29,7 +29,7 @@ mongoose.set("useFindAndModify", false);
 const itemSchema = new mongoose.Schema({
   
     listId: {type: String, ref:'User', required: false},
-    text: {type: String, maxlength: [20, 'description too long'], required: false},
+    text: {type: String, maxlength: [20, 'description too long'], required: true},
     // amount: {type: Number, min: 1, required: false},
     amount: {type: Number, required: false, default: 1},
 

@@ -63,13 +63,25 @@ test('insert default value of 1 if amount-property is missing ', async () => {
   await api
   .post('/api/items/new-item')
   .send(newItem)
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
+  .expect(200)
+  .expect('Content-Type', /application\/json/)
 
   const item = await Item.find({text: 'Coffee Beans'})
 
   expect(item[0]["amount"]).toEqual(1)
 
+})
+
+test('missing text', async () => {
+
+  const newItem = {
+    amount: 5,
+  }
+
+  await api
+    .post('/api/items/new-item')
+    .send(newItem)
+    .expect(400)
 })
 
 afterAll(() => {

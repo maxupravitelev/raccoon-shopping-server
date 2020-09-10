@@ -29,6 +29,30 @@ test('testing amount of items', async () => {
   expect(response.body).toHaveLength(helper.initialItems.length)
 })
 
+test('a valid item can be added', async () => {
+  const newItem = {
+    isCompleted: 0,
+    _id: "5f55f5ab4236c70017ac62aa",
+    listId: "0",
+    text: "Rice Noodles",
+    amount: 3,
+    date: "2020-09-07T08:56:11.565Z",
+    __v: 0,
+  }
+
+  await api
+    .post('/api/items/new-item')
+    .send(newItem)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const itemsAtEnd = await helper.itemsInDb()
+  expect(itemsAtEnd).toHaveLength(helper.initialItems.length + 1)
+  
+  // const titles = blogsAtEnd.map(r => r.title)
+  // expect(titles).toContain('Canonical string reduction')
+})
+
 // test('lists are returned as json', async () => {
 //   await api
 //     .get('/api/lists')

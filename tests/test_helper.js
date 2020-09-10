@@ -31,7 +31,7 @@ const initialItems = [
   },
 ];
 
-// not working yet, need to include List
+// not fully working yet, need to include List for different Lists
 const itemsInDb = async () => {
     const items = await Item.find({})
     return items.map(item => item.toJSON())

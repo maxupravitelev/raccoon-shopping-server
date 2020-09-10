@@ -34,7 +34,7 @@ itemRouter.post('/new-item',  (req, res, next) => {
         item.save( (err, newLog) => {
           
           if (err) return next(err);
-          console.log(item)
+          // console.log(item)
           res.json({
                 listId: item.listId, 
                 text: item.text, 

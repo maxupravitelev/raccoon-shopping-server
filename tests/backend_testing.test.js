@@ -49,16 +49,11 @@ test('a valid item can be added', async () => {
   const itemsAtEnd = await helper.itemsInDb()
   expect(itemsAtEnd).toHaveLength(helper.initialItems.length + 1)
   
-  // const titles = blogsAtEnd.map(r => r.title)
-  // expect(titles).toContain('Canonical string reduction')
+  const texts = itemsAtEnd.map(r => r.text)
+  expect(texts).toContain('Rice Noodles')
 })
 
-// test('lists are returned as json', async () => {
-//   await api
-//     .get('/api/lists')
-//     // .expect(200)
-//     .expect('Content-Type', /application\/json/)
-// })
+
 
 afterAll(() => {
   mongoose.connection.close()

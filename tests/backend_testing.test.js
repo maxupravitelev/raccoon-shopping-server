@@ -53,7 +53,24 @@ test('a valid item can be added', async () => {
   expect(texts).toContain('Rice Noodles')
 })
 
+test('insert default value of 1 if amount-property is missing ', async () => {
+  const newItem = {
+    _id: "5f578977ed9d00358bd40297",
+    listId: "0",
+    text: "Coffee Beans",
+  }
 
+  await api
+  .post('/api/items/new-item')
+  .send(newItem)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const item = await Item.find({text: 'Coffee Beans'})
+
+  expect(item[0]["amount"]).toEqual(1)
+
+})
 
 afterAll(() => {
   mongoose.connection.close()

@@ -31,6 +31,8 @@ const initialItems = [
   },
 ];
 
+
+
 // not fully working yet, need to include List for different Lists
 const itemsInDb = async () => {
     const items = await Item.find({})

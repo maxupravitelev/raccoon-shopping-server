@@ -94,6 +94,18 @@ test('delete item', async () => {
 
 })
 
+test.only('update isCompleted', async () => {
+  
+  const id = '5f55f5ab4236c70017ac63ef'
+
+  let isCompleted = {isCompleted: 1}
+
+  await api
+    .put('/api/items/' + id)
+    .send(isCompleted)
+    .expect(isCompleted)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })

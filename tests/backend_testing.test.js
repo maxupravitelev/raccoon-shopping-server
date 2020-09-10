@@ -84,6 +84,16 @@ test('missing text', async () => {
     .expect(400)
 })
 
+test('delete item', async () => {
+  
+  const id = '5f55f5ab4236c70017ac63ef'
+
+  await api
+    .delete('/api/items/'+ id)
+    .expect(204)
+
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })

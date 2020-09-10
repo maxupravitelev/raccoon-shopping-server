@@ -51,7 +51,7 @@ itemRouter.post('/new-item',  (req, res, next) => {
 
 /* delete routes */
 
-itemRouter.delete("/api/items/:id", (request, response, next) => {
+itemRouter.delete("/:id", (request, response, next) => {
     Item.findByIdAndRemove(request.params.id)
       .then((result) => {
         response.status(204).end();

@@ -2,6 +2,10 @@ const itemRouter = require("express").Router();
 const Item = require("../models/item")
 const List = require("../models/list")
 
+/* .get routes */
+
+
+/* .post routes */
 
 itemRouter.post('/new-item',  (req, res, next) => {
     
@@ -45,9 +49,7 @@ itemRouter.post('/new-item',  (req, res, next) => {
     
   });  
 
-///* itemRouter.delete routes */
-
-/* delete item */
+/* delete routes */
 
 itemRouter.delete("/api/items/:id", (request, response, next) => {
     Item.findByIdAndRemove(request.params.id)
@@ -58,7 +60,8 @@ itemRouter.delete("/api/items/:id", (request, response, next) => {
   });
   
   
-  ///* itemRouter.put routes*/ 
+/* .put routes */
+
   
   // itemRouter.put("/api/items/:id", (request, response, next) => {
   //   const body = request.body;

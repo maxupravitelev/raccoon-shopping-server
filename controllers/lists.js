@@ -7,7 +7,7 @@ const Item = require("../models/item")
 
 /* .get all lists */
 
-// not ready
+// not finished
 // listRouter.get("/api/lists", (req, res, next) => {
 //   List.find({})
 //     .then((list) => {

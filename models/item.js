@@ -34,7 +34,7 @@ const itemSchema = new mongoose.Schema({
     amount: {type: Number, required: false, default: 1},
 
     date: {type: Date, default: Date.now},
-    isCompleted: {type: Number, default: 0},
+    isCompleted: {type: Boolean, default: false},
     itemId: {type: String}
   });
 

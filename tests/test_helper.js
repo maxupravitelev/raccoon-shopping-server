@@ -3,7 +3,7 @@ const Item = require("../models/item");
 
 const initialItems = [
   {
-    isCompleted: 0,
+    isCompleted: false,
     _id: "5f55f5ab4236c70017ac63ef",
     listId: "0",
     text: "Cookies",
@@ -12,7 +12,7 @@ const initialItems = [
     __v: 0,
   },
   {
-    isCompleted: 0,
+    isCompleted: false,
     _id: "5f55f5af4236c70017ac63f0",
     listId: "0",
     text: "Panzer",
@@ -21,7 +21,7 @@ const initialItems = [
     __v: 0,
   },
   {
-    isCompleted: 0,
+    isCompleted: true,
     _id: "5f578977ed9d35358bd40297",
     listId: "0",
     text: "Cookies",

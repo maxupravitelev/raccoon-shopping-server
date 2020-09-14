@@ -98,7 +98,7 @@ test.only('update isCompleted', async () => {
   
   const id = '5f55f5ab4236c70017ac63ef'
 
-  let isCompleted = {isCompleted: 1}
+  let isCompleted = {isCompleted: true}
 
   await api
     .put('/api/items/' + id)

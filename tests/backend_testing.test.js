@@ -94,7 +94,7 @@ test('delete item', async () => {
 
 })
 
-test.only('update isCompleted', async () => {
+test('update isCompleted', async () => {
   
   const id = '5f55f5ab4236c70017ac63ef'
 

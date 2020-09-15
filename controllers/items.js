@@ -6,7 +6,7 @@ const List = require("../models/list");
 
 /* .post routes */
 
-itemRouter.post("/new-item", (req, res, next) => {
+itemRouter.post("/new-item", async (req, res, next) => {
   let listId = req.body.listId;
   let text = req.body.text;
   let amount = req.body.amount;
@@ -25,7 +25,7 @@ itemRouter.post("/new-item", (req, res, next) => {
 
   // console.log(update)
 
-  List.findById(req.body.listId, (err, list) => {
+  await List.findById(req.body.listId, (err, list) => {
     const item = new Item(update);
 
     item.save((err, newLog) => {

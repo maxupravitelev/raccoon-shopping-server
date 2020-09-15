@@ -10,13 +10,17 @@ const List = require("../models/list");
 
 /* .post routes */
 
-itemRouter.post("/new-item", (request, response, next) => {
+itemRouter.post("/new-item", (request, response) => {
   let listId = request.body.listId;
   let text = request.body.text;
   let amount = request.body.amount;
   let date = request.body.date || Date.now();
   let isCompleted = request.body.isCompleted || 0;
   let itemId = request.body.itemId;
+
+  if (text == undefined) {
+    return response.status(400).end();
+  }
 
   let update = {
     listId: listId,

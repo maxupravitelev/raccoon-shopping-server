@@ -2,11 +2,14 @@ const itemRouter = require("express").Router();
 const Item = require("../models/item");
 const List = require("../models/list");
 
+
+// errors are handled with 'express-async-errors' @app.js; no try/catch blocks & next necessary
+
 /* .get routes */
 
 /* .post routes */
 
-itemRouter.post("/new-item", async (req, res, next) => {
+itemRouter.post("/new-item", (req, res, next) => {
   let listId = req.body.listId;
   let text = req.body.text;
   let amount = req.body.amount;
@@ -25,7 +28,7 @@ itemRouter.post("/new-item", async (req, res, next) => {
 
   // console.log(update)
 
-  await List.findById(req.body.listId, (err, list) => {
+  List.findById(req.body.listId, (err, list) => {
     const item = new Item(update);
 
     item.save((err, newLog) => {
@@ -45,24 +48,22 @@ itemRouter.post("/new-item", async (req, res, next) => {
 
 /* delete routes */
 
-itemRouter.delete("/:id", (request, response, next) => {
-  Item.findByIdAndRemove(request.params.id)
-    .then((result) => {
-      response.status(204).end();
-    })
-    .catch((error) => next(error));
+itemRouter.delete("/:id", async (request, response) => {
+  
+  await Item.findByIdAndRemove(request.params.id) 
+  response.status(204).end();
+
 });
 
 /* .put routes */
 
-itemRouter.put("/:id", (request, response, next) => {
+itemRouter.put("/:id", (request, response) => {
   const body = request.body;
 
   const item = {
     isCompleted: body.isCompleted
   };
 
-  // console.log(request.params.id)
 
   Item.findByIdAndUpdate(request.params.id, item, { new: true })
     .then((updatedItem) => {

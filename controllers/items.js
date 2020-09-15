@@ -57,19 +57,16 @@ itemRouter.delete("/:id", async (request, response) => {
 
 /* .put routes */
 
-itemRouter.put("/:id", (request, response) => {
+itemRouter.put("/:id", async (request, response) => {
   const body = request.body;
 
   const item = {
     isCompleted: body.isCompleted
   };
 
-
-  Item.findByIdAndUpdate(request.params.id, item, { new: true })
-    .then((updatedItem) => {
-      response.json({isCompleted: updatedItem.isCompleted});
-    })
-    .catch((error) => next(error));
+  let updatedItem = await Item.findByIdAndUpdate(request.params.id, item, { new: true })
+  response.json({isCompleted: updatedItem.isCompleted});  
+  
 });
 
 // itemRouter.put("/api/items/:id", (request, response, next) => {

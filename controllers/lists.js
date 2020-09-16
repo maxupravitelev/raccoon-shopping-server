@@ -19,12 +19,10 @@ const Item = require("../models/item")
 
 /* .get all Items in List via listId */
 
-listRouter.get("/:id", (req, res, next) => {
-    Item.find({ listId: req.params.id })
-      .then((list) => {
-        res.json(list);
-      })
-      .catch((error) => next(error));
+listRouter.get("/:id", async (request, response) => {
+    const list = await Item.find({ listId: request.params.id })
+    response.json(list)
+    
   });
   
 ///***** .post routes */

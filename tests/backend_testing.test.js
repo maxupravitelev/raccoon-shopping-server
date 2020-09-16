@@ -13,6 +13,7 @@ const Item = require("../models/item");
 
 beforeEach(async () => {
   await Item.deleteMany({})
+  await List.deleteMany({})
 
   let itemObject = new Item(helper.initialItems[0])
   await itemObject.save()
@@ -22,6 +23,9 @@ beforeEach(async () => {
 
   itemObject = new Item(helper.initialItems[2])
   await itemObject.save()
+
+  let listObject = new List({listId: 0})
+  await listObject.save()
 })
 
 test('testing amount of items', async () => {
@@ -108,4 +112,18 @@ test('update isCompleted', async () => {
 
 afterAll(() => {
   mongoose.connection.close()
+})
+
+
+describe('testing list routs', () => {
+  
+  const listId = 0
+  
+  test('get list with listId', async () => {
+    await api
+      .get('/api/lists/' + listId)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
+
 })

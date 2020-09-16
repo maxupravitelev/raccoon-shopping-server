@@ -33,12 +33,17 @@ const initialItems = [
 
 
 
-// not fully working yet, need to include List for different Lists
+// not fully working yet, need to include List for items in different Lists
 const itemsInDb = async () => {
   const items = await Item.find({})
   return items.map(item => item.toJSON())
 }
 
+const listsInDb = async () => {
+  const lists = await List.find({})
+  return lists.map(list => list.toJSON())
+}
+
 module.exports = {
-  initialItems, itemsInDb
+  initialItems, itemsInDb, listsInDb
 }

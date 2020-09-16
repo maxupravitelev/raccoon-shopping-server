@@ -11,6 +11,7 @@ const api = supertest(app)
 
 const List = require('../models/list')
 const Item = require('../models/item')
+const { listsInDb } = require('./test_helper')
 
 beforeEach(async () => {
   await Item.deleteMany({})
@@ -139,6 +140,11 @@ describe('list routes testing', () => {
 
     const response = await api.get('/api/lists')
     expect(response.body).toHaveLength(2)
+
+    const listsAtEnd = await helper.listsInDb()
+
+    const listIds = listsAtEnd.map(r => r.listId)
+    expect(listIds).toContain(1)
   })
 
 

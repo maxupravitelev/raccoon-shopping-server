@@ -1,6 +1,7 @@
 const listRouter = require('express').Router()
 const List = require('../models/list')
 const Item = require('../models/item')
+const { response } = require('../app')
 
 
 ///***** .get routes */
@@ -8,12 +9,9 @@ const Item = require('../models/item')
 /* .get all lists */
 
 // not finished
-listRouter.get('/', (req, res, next) => {
-  List.find({})
-    .then((list) => {
-      res.json(list)
-    })
-    .catch((error) => next(error))
+listRouter.get('/', async (request, response) => {
+  const list = await List.find({})
+  response.json(list)
 })
 
 

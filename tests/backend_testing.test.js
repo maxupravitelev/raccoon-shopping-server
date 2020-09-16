@@ -28,10 +28,16 @@ beforeEach(async () => {
   await listObject.save()
 })
 
+describe('item routes testing', () => {
+
+
+
+
 test('testing amount of items', async () => {
   const response = await api.get('/api/lists/0')
   expect(response.body).toHaveLength(helper.initialItems.length)
 })
+
 
 test('a valid item can be added', async () => {
   const newItem = {
@@ -110,12 +116,12 @@ test('update isCompleted', async () => {
     .expect(isCompleted)
 })
 
-afterAll(() => {
-  mongoose.connection.close()
 })
 
 
-describe('testing list routs', () => {
+
+
+describe('list routes testing', () => {
   
   const listId = 0
   
@@ -126,4 +132,8 @@ describe('testing list routs', () => {
       .expect('Content-Type', /application\/json/)
   })
 
+})
+
+afterAll(() => {
+  mongoose.connection.close()
 })

@@ -11,31 +11,24 @@ const List = require('../models/list')
 /* .post routes */
 
 itemRouter.post('/new-item', (request, response) => {
-  let listId = request.body.listId
-  let text = request.body.text
-  let amount = request.body.amount
-  let date = request.body.date || Date.now()
-  let isCompleted = request.body.isCompleted || 0
-  let itemId = request.body.itemId
-
-  if (text == undefined) {
+  if (request.body.text === undefined) {
     return response.status(400).end()
   }
 
   let update = {
-    listId: listId,
-    text: text,
-    amount: amount,
-    date: date,
-    isCompleted: isCompleted,
-    itemId: itemId,
+    listId: request.body.listId,
+    text: request.body.text,
+    amount: request.body.amount,
+    date: request.body.date || Date.now(),
+    isCompleted: request.body.isCompleted || 0,
+    itemId: request.body.itemId,
   }
 
-  List.findById(request.body.listId, async (err, list) => {
+  List.findById(request.body.listId, async () => {
     const item = new Item(update)
 
     const savedItem = await item.save()
-    console.log(savedItem)
+    // console.log(savedItem)
     response.json(savedItem)
 
     // item.save((err, newLog) => {

@@ -29,12 +29,12 @@ listRouter.post('/new-list', (request, response) => {
 
   List.countDocuments({}, async (error, count) => {
     listCount = count
-    console.log(listCount)
+    // console.log(listCount)
 
     let list = new List ({
       listId: listCount++
     })
-    console.log(list)
+    // console.log(list)
 
     const newList = await list.save()
     response.json(newList)
@@ -42,6 +42,5 @@ listRouter.post('/new-list', (request, response) => {
   })
 })
 
-/* .post */
 
 module.exports = listRouter

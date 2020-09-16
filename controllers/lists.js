@@ -7,8 +7,6 @@ const { response } = require('../app')
 ///***** .get routes */
 
 /* .get all lists */
-
-// not finished
 listRouter.get('/', async (request, response) => {
   const list = await List.find({})
   response.json(list)
@@ -16,7 +14,6 @@ listRouter.get('/', async (request, response) => {
 
 
 /* .get all Items in List via listId */
-
 listRouter.get('/:id', async (request, response) => {
   const list = await Item.find({ listId: request.params.id })
   response.json(list)
@@ -26,43 +23,25 @@ listRouter.get('/:id', async (request, response) => {
 ///***** .post routes */
 
 /* .post new list; create new list*/
-listRouter.post('/new-list', (req, res) => {
+listRouter.post('/new-list', (request, response) => {
 
   let listCount = 0
 
-  List.countDocuments({}, (error, count) => {
+  List.countDocuments({}, async (error, count) => {
     listCount = count
     console.log(listCount)
-  }).then(() => {
 
     let list = new List ({
       listId: listCount++
     })
     console.log(list)
-    list.save().then((newList) => {
-      res.json(newList)
-    }).catch((error) => console.log(error))
 
-  }).catch((error) => console.log(error))
+    const newList = await list.save()
+    response.json(newList)
 
+  })
 })
 
-
 /* .post */
-
-// listRouter.post("/api/lists", (req, res, next) => {
-//   const body = req.body;
-
-//   const item = new Item({
-//     newItems: body.newItems,
-//   });
-
-//   list
-//     .save()
-//     .then((savedList) => {
-//       res.json(savedList);
-//     })
-//     .catch((error) => next(error));
-// });
 
 module.exports = listRouter

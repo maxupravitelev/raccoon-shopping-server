@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
-mongoose.set("useFindAndModify", false);
+mongoose.set('useFindAndModify', false)
 
 
 // const url = process.env.MONGODB_URI;
@@ -22,21 +22,21 @@ mongoose.set("useFindAndModify", false);
 //           text: String,
 //           amount: Number,
 //           price: Number,
-//           isCompleted: Number 
+//           isCompleted: Number
 //         }]
 //     });
 
 const itemSchema = new mongoose.Schema({
-  
-    listId: {type: String, ref:'User', required: false},
-    text: {type: String, maxlength: [20, 'description too long'], required: true},
-    // amount: {type: Number, min: 1, required: false},
-    amount: {type: Number, required: false, default: 1},
 
-    date: {type: Date, default: Date.now},
-    isCompleted: {type: Boolean, default: false},
-    itemId: {type: String}
-  });
+  listId: { type: String, ref:'User', required: false },
+  text: { type: String, maxlength: [20, 'description too long'], required: true },
+  // amount: {type: Number, min: 1, required: false},
+  amount: { type: Number, required: false, default: 1 },
+
+  date: { type: Date, default: Date.now },
+  isCompleted: { type: Boolean, default: false },
+  itemId: { type: String }
+})
 
 // listSchema.set("toJSON", {
 //   transform: (document, returnedObject) => {

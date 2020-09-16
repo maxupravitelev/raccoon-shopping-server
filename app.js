@@ -32,9 +32,4 @@ app.use('/api/items', itemRouter)
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
-
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
-}
-
 module.exports = app

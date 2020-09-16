@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose')
 
-mongoose.set("useFindAndModify", false);
+mongoose.set('useFindAndModify', false)
 
 
 // const url = process.env.MONGODB_URI
@@ -19,8 +19,8 @@ mongoose.set("useFindAndModify", false);
 //   })
 
 const listSchema = new mongoose.Schema({
-    listId: { type: Number }
-    })
+  listId: { type: Number }
+})
 
 
 module.exports = mongoose.model('List', listSchema)

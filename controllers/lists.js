@@ -8,13 +8,13 @@ const Item = require('../models/item')
 /* .get all lists */
 
 // not finished
-// listRouter.get("/api/lists", (req, res, next) => {
-//   List.find({})
-//     .then((list) => {
-//       res.json(list);
-//     })
-//     .catch((error) => next(error));
-// });
+listRouter.get('/', (req, res, next) => {
+  List.find({})
+    .then((list) => {
+      res.json(list)
+    })
+    .catch((error) => next(error))
+})
 
 
 /* .get all Items in List via listId */

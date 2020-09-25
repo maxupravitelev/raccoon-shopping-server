@@ -3,42 +3,19 @@ const mongoose = require('mongoose')
 mongoose.set('useFindAndModify', false)
 
 
-// const url = process.env.MONGODB_URI;
-
-// console.log('connecting to', url)
-
-// mongoose
-//   .connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
-//   .then((result) => {
-//     console.log("connected to", url);
-//   })
-//   .catch((error) => {
-//     console.log("error connecting to MongoDB:", error.message);
-//   });
-
-
-// const listSchema = new mongoose.Schema({
-//       newItems: [{
-//           text: String,
-//           amount: Number,
-//           price: Number,
-//           isCompleted: Number
-//         }]
-//     });
-
 const itemSchema = new mongoose.Schema({
-  
-  listId: {type: String, ref:'User', required: false},
-  
-  text: {type: String, maxlength: [20, 'description too long'], required: true}, //productName
-  
-  amount: {type: Number, min: 0, max:99999, required: false, default: 1}, // *productQuantity
- 
-  unitType: {type: String, default: "Unit(s)"},
 
-  productPrice: {type: Number, min:0, default: 0},
+  listId: { type: String, ref:'User', required: false },
 
-  productCurrency: {type: String, default: "EUR"},
+  text: { type: String, maxlength: [20, 'description too long'], required: true }, //productName
+
+  amount: { type: Number, min: 0, max: 99999, required: false, default: 1 }, // *productQuantity
+
+  unitType: { type: String, default: 'Unit(s)' },
+
+  productPrice: { type: Number, min:0, default: 0 },
+
+  productCurrency: { type: String, default: 'EUR' },
 
   productNotes: { type: String, minlength:1, maxlength: 256 },
 
@@ -46,11 +23,11 @@ const itemSchema = new mongoose.Schema({
   productImage: { type: String },
 
   //eine 13-Stellige Integer - Europäische Artikelnummer
-  ean: {type: Number, min: 0, max: 9999999999999, default: 0},
+  ean: { type: Number, min: 0, max: 9999999999999, default: 0 },
 
-  date: {type: Date, default: Date.now}, //addDate
-  isCompleted: {type: Boolean, default: false},
-  itemId: {type: String} //id
+  date: { type: Date, default: Date.now }, //addDate
+  isCompleted: { type: Boolean, default: false },
+  itemId: { type: String } //id
 })
 
 

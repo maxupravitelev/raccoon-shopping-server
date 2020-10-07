@@ -2,34 +2,45 @@ const mongoose = require('mongoose')
 
 mongoose.set('useFindAndModify', false)
 
-
 const itemSchema = new mongoose.Schema({
+  
+    listId: {type: String, ref:'list', required: true}, //NEUERUNG!!! Ich habe das mal auf required gesetzt, damit keine herumirrenden Items in der Datenbank liegen
+    
+    text: {type: String, maxlength: [20, 'description too long'], required: true}, //productName
+    
+    amount: {type: Number, min: 0, max:99999, default: 1}, // *productQuantity
 
-  listId: { type: String, ref:'User', required: false },
+    /*Hier wäre eine Liste von akzeptierten Units gut, die man dann (z.B.) via dropdownmenü anwählen kann (etc. etc.)*/
+    unitType: {type: String, default: "Unit(s)"},
 
-  text: { type: String, maxlength: [20, 'description too long'], required: true }, //productName
+    /*
+    - Defaultet erstmal auf 0. Mit default-Wert kannst du die Umsetzung in der Web-App ja dann beliebig planen
+    - Max Value? könnte sinnvoll sein...
+    */  
+    productPrice: {type: Number, min:0, default: 0},
+  
+    productCurrency: {type: String, default: "EUR"},
+  
+    productTextNote: { type: String, minlength:1, maxlength: 256 },
 
-  amount: { type: Number, min: 0, max: 99999, required: false, default: 1 }, // *productQuantity
+    /*Man könnte hier anstatt der Links auch IDs der Datenbankeinträge
+    zu den Bildern/Sounddateien senden, aber wenn wir das mit populate() 
+    benutzen wollen, könnte das problematisch sein... */
 
-  unitType: { type: String, default: 'Unit(s)' },
+    /*Link to a Voice Note*/
+    productVoiceNote: { type: String },
+    /*Link to an product Image */
+    productImage: { type: String },
+    
 
-  productPrice: { type: Number, min:0, default: 0 },
-
-  productCurrency: { type: String, default: 'EUR' },
-
-  productNotes: { type: String, minlength:1, maxlength: 256 },
-
-  /*Link to an product Image */
-  productImage: { type: String },
-
-  //eine 13-Stellige Integer - Europäische Artikelnummer
-  ean: { type: Number, min: 0, max: 9999999999999, default: 0 },
-
-  date: { type: Date, default: Date.now }, //addDate
-  isCompleted: { type: Boolean, default: false },
-  itemId: { type: String } //id
-})
-
+  
+    //eine 13-Stellige Integer - Europäische Artikelnummer
+    ean: {type: Number, min: 0, max: 9999999999999, default: 0},
+  
+    date: {type: Date, default: Date.now}, //addDate
+    isCompleted: {type: Boolean, default: false},
+    itemId: {type: String} //id
+  });
 
 // listSchema.set("toJSON", {
 //   transform: (document, returnedObject) => {

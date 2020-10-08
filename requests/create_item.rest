@@ -2,8 +2,8 @@ POST http://localhost:3001/api/items/new-item
 Content-Type: application/json
 
 {
-    "listId": 26,
-    "text": "C-Rex",
+    "listId": 0,
+    "text": "D-Rex",
     "amount": 5,
     "isCompleted": 1,
     "itemId": "sf"

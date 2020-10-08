@@ -1,6 +1,7 @@
 const itemRouter = require('express').Router()
 const { response } = require('../app')
 const Item = require('../models/item')
+const { findOneAndUpdate, findByIdAndUpdate } = require('../models/list')
 const List = require('../models/list')
 
 
@@ -10,10 +11,11 @@ const List = require('../models/list')
 
 /* .post routes */
 
-itemRouter.post('/new-item', (request, response) => {
+itemRouter.post('/new-item', async (request, response) => {
   if (request.body.text === undefined) {
     return response.status(400).end()
   }
+  let containingList = await List.findOne({ listId: request.body.listId })
 
   let update = {
     listId: request.body.listId,
@@ -22,8 +24,27 @@ itemRouter.post('/new-item', (request, response) => {
     date: request.body.date || Date.now(),
     isCompleted: request.body.isCompleted || 0,
     itemId: request.body.itemId,
+    //added
+    unitType: request.body.unitType,
+    productPrice: request.body.productPrice,
+    productCurrency: request.body.productCurrency,
+    productTextNote: request.body.productTextNote,
+    productVoiceNote: request.body.productVoiceNote,
+    productImage: request.body.productImage,
+    ean: request.body.ean,
+    mongoListId: containingList._id,
   }
+  const item = new Item(update)
+  const savedItem = await item.save()
+  containingList.items = containingList.items.concat(savedItem._id)
+  await List.findByIdAndUpdate(containingList._id, { items: containingList.items })
+  response.json(savedItem)
 
+  /* Max ich habe das einmal rauskommentiert, weil ich noch nicht
+  genau wusste was da warum passiert (warum du das mit callback
+  gelöst hast etc., bzw. welche Probleme entstehen, wenn man es
+  ummodelt und dann schnell zurück kann.*/
+  /*
   List.findById(request.body.listId, async () => {
     const item = new Item(update)
 
@@ -42,7 +63,7 @@ itemRouter.post('/new-item', (request, response) => {
     //     itemId: item["_id"],
     //   });
     // });
-  })
+  }) */
 })
 
 /* delete routes */

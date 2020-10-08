@@ -13,11 +13,18 @@ listRouter.get('/', async (request, response) => {
 })
 
 
-/* .get all Items in List via listId */
+/* .get all Items in List via */
 listRouter.get('/:id', async (request, response) => {
   const list = await Item.find({ listId: request.params.id })
   response.json(list)
+})
 
+/* .get all Items in List via listId with integrated*/
+
+listRouter.get('/:id/full', async (request, response) => {
+
+  const list = await List.findOne({ listId: request.params.id }).populate('items')
+  response.json(list)
 })
 
 ///***** .post routes */
